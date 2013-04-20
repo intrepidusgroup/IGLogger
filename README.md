@@ -42,7 +42,8 @@ and pass the Intent to it before the Activity is started. The code might look li
 The Intent trace loggers will attempt to parse the Intent in two ways. The first is a simple
 call to toString (you might see this for the Intent in the logs already). The second way
 is to export the proper "am" (Activity Manager) command to allow resending the Intent
-from an adb shell (note: this is still a little buggy but should get you started)
+from an adb shell (note: this is still a little buggy but should get you started. Watch
+for error messages in the am command)
     
 
 Tips for Errors 
@@ -66,6 +67,7 @@ Version History
 ===============
 
 v2.50 
- Added a lot more "trace" classes (for use mainly with APKSmash).
- Handles more types of objects and parsing (Intents, SQL calls)
+ 
+ + Added a lot more "trace" classes (for use mainly with APKSmash).
+ + Handles more types of objects and parsing (Intents, SQL calls)
 	
