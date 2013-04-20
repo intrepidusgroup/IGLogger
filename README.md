@@ -46,3 +46,11 @@ in this logging class)
 http://source.android.com/tech/dalvik/dex-format.html
 
 ("Value Formats" table)
+
+
+Version History
+===============
+
+v2.50 - Added a lot more "trace" classes (for use mainly with APKSmash).
+	Handles more types of objects and parsing (Intents, SQL calls)
+	

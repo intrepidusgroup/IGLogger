@@ -2,9 +2,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import android.content.ContentValues;
+import android.content.Intent;
+import android.database.sqlite.SQLiteQueryBuilder;
+import android.os.Bundle;
+import android.text.TextUtils;
 
 /* 
  * Wrapper for debugging methods. 
@@ -56,7 +65,7 @@ public class iglogger {
 	// In logcat, set your filter for "tag:!!!" to view the messages from this class
 	private static String LOG_TAG = "!!! IGLogger";
 	private static String TRACE_TAG = "!!! IGTraceLogger";
-	private static String VERSION = "IGLogger 2.01 - 02/07/2013";
+	private static String VERSION = "IGLogger 2.50 - 04/20/2013";
 	
 	 /* Default Case
 	  *  - Use this call to just print you where here in a method
@@ -80,60 +89,6 @@ public class iglogger {
 	 }
 
 		
-	 /* Trace Method
-	  *  - Use this call to just print you where here in a method
-	  *  - Main use is for putting this at the start of each method to help trace an obfuscated app
-	  * 
-	  * *** SMALI CODE TO ADD ***
-	  * invoke-static {}, Liglogger;->trace_method()I  
-	  * 
-	  */	
-	 static public int trace_method() {
-		 Throwable t = new Throwable();
-		 String logtag = TRACE_TAG + " in Method: " + t.getStackTrace()[1].getClassName();
-		 
-		 // Unfortuantely we cant get the details for an overloaded method
-		 // this would be helpful for obfuscated classes
-		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
-		 
-		 // Line number so far as "-1" but this might work on some apps. 
-		 // We'll leave it for now.
-		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();
-	     return android.util.Log.wtf(logtag, logtag);
-	 }
-	 
-	 /* Trace Intent
-	  *   Logs out a string being used to INIT an intent. Log right before or after this line
-	  *   invoke-direct {v0, v1}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
-	  *   
-	  * *** SMALI CODE TO ADD ***
-	  * invoke-static {v1}, Liglogger;->trace_intent(Ljava/lang/String;)I  
-	  * 
-	  */ 	 	 
-	 static public int trace_intent(String m) {
-		 Throwable t = new Throwable();
-		 String logtag = TRACE_TAG + " creating INTENT: " + t.getStackTrace()[1].getClassName();		  
-	     return android.util.Log.wtf(logtag, notEmpty(m));
-	 }	 
-
-	 /* Trace String Compare
-	  *   Logs out a string being compared. Log right before or after this line
-	  *   invoke-virtual {v3, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-	  *   
-	  *   There is a known issue with this and Android 2.3 (and lower?) where this seems to go unlogged
-	  *   Issue maybe with the throwable object and some classes. Logging can still work, but you wont
-	  *   be able to automatically get the class/method name of the caller.
-	  *   
-	  * *** SMALI CODE TO ADD ***
-	  * invoke-static {v1, v2}, Liglogger;->trace_stringcompare(Ljava/lang/String;Ljava/lang/String;)I  
-	  * 
-	  */ 	 	 
-	 static public int trace_stringcompare(String m, String n) {
-		 Throwable t = new Throwable();
-		 String logtag = TRACE_TAG + " string compare: " + t.getStackTrace()[1].getClassName();		  
-	     return android.util.Log.wtf(logtag, notEmpty(m) + " == " + notEmpty(n));
-	 }	
-	 
 	 /* Special Case: stacktrace
 	  *  - Use this print a stack trace to the log when you hit this code, but no 
 	  *  error is thrown. Useful in obfuscated classes where its hard to tell what
@@ -490,6 +445,332 @@ public class iglogger {
 		 }
 	     return 1;
 	 }
+
+	 /* =============================== TRACE ========================================
+	  *  
+	  *  These calls can handle more complex objects and are designed to work with the APKSmash script.
+	  *  Things might get a be bloated down here since these are designed to be placed in the APK
+	  *  in an automated way (ie, logging all Intents which are received or sent to an app). Some of
+	  *  these might be useful for standard logging as well though.  
+	  *  
+	  * 
+	  */
+	 
+	 
+	 
+	 /* Trace Method
+	  *  - Use this call to just print you where here in a method
+	  *  - Main use is for putting this at the start of each method to help trace an obfuscated app
+	  * 
+	  * *** SMALI CODE TO ADD ***
+	  * invoke-static {}, Liglogger;->trace_method()I  
+	  * 
+	  */	
+	 static public int trace_method() {
+		 Throwable t = new Throwable();
+		 String logtag = TRACE_TAG + " in Method: " + t.getStackTrace()[1].getClassName();
+		 
+		 // Unfortuantely we cant get the details for an overloaded method
+		 // this would be helpful for obfuscated classes
+		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
+		 
+		 // Line number so far as "-1" but this might work on some apps. 
+		 // We'll leave it for now.
+		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();
+	     return android.util.Log.i(logtag, logtag);
+	 }
+	 static public int trace_boolmethod(boolean m) {
+		 Throwable t = new Throwable();
+		 String p = "";
+		 String logtag = TRACE_TAG + " Boolean Method Return: " + t.getStackTrace()[1].getClassName();
+		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
+		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
+		 
+		 if(m){
+			 p = "returning: TRUE";
+		 } else {
+			 p = "returning: FALSE";
+		 }
+	     return android.util.Log.i(logtag, notEmpty(p));
+	 }		   	 
+
+	 
+	 /* More Trace Stuff
+	  * 
+	  *   Since we can't pass a string to the logger without more changes to smali code, 
+	  *   we'll make a good log string here and call the correct trace method.
+	  * 
+	  */ 	 	 
+	 static public int trace_dbcolumn(String m) {
+		 Throwable t = new Throwable();
+		 String logtag = TRACE_TAG + " DB Get Column : " + t.getStackTrace()[1].getClassName();		  
+	     return android.util.Log.wtf(logtag, notEmpty(m));
+	 }	 
+	 static public int trace_dbgetstring(String m) {
+		 Throwable t = new Throwable();
+		 String logtag = TRACE_TAG + " DB Get String Value : " + t.getStackTrace()[1].getClassName();		  
+	     return android.util.Log.wtf(logtag, notEmpty(m));
+	 }	
+	 static public int trace_sharedpref(String m) {
+		 Throwable t = new Throwable();
+		 String logtag = TRACE_TAG + " Shared Pref Access : " + t.getStackTrace()[1].getClassName();		  
+	     return android.util.Log.wtf(logtag, notEmpty(m));
+	 }
+	 static public int trace_json(String m) {
+		 Throwable t = new Throwable();
+		 String logtag = TRACE_TAG + " creating JSON: " + t.getStackTrace()[1].getClassName();		  
+	     return android.util.Log.wtf(logtag, notEmpty(m));
+	 }	 
+	 static public int trace_httpstring(String m) {
+		 Throwable t = new Throwable();
+		 String logtag = TRACE_TAG + " HTTP String: " + t.getStackTrace()[1].getClassName();		  
+	     return android.util.Log.wtf(logtag, notEmpty(m));
+	 }
+	 static public int trace_intent(String m) {
+		 Throwable t = new Throwable();
+		 String logtag = TRACE_TAG + " creating INTENT: " + t.getStackTrace()[1].getClassName();		  
+	     return android.util.Log.wtf(logtag, notEmpty(m));
+	 }	
+	 static public int trace_intent(Intent i) {
+		 return trace_intent(i, "UNKNOWN", "UNKNOWN");
+	 }
+	 static public int trace_intent_sendactivity(Intent i) {
+		 return trace_intent(i, "start", "SENDING");
+	 }	 
+	 static public int trace_intent_sendservice(Intent i) {
+		 return trace_intent(i, "startservice", "SENDING");
+	 }	
+	 static public int trace_intent_sendbroadcast(Intent i) {
+		 return trace_intent(i, "broadcast", "SENDING");
+	 }	 
+	 static public int trace_intent_receiveactivity(Intent i) {
+		 return trace_intent(i, "start", "RECEIVED");
+	 }	 
+	 static public int trace_intent_receiveservice(Intent i) {
+		 return trace_intent(i, "startservice", "RECEIVED");
+	 }	
+	 static public int trace_intent_receivebroadcast(Intent i) {
+		 return trace_intent(i, "broadcast", "RECEIVED");
+	 }		 
+	 static public int trace_intent(Intent i, String commandtype, String sendorreceive) {
+		 Throwable t = new Throwable();
+		 String logtag = TRACE_TAG + " " + sendorreceive + " INTENT from: " + t.getStackTrace()[2].getClassName();	
+		 String m = "am "+ commandtype;
+		 try{
+			 // This should put data in a form for 'adb shell am' <INTENT> 
+			 
+			 if(i.getAction() != null)
+				 m += " -a '" + i.getAction() + "'";
+			 if(i.getDataString() != null)
+				 m += " -d '" + i.getDataString() + "'";
+			 if(i.getType() != null)
+				 m += " -t '" + i.getType() + "'";
+			 
+			// See if there are extras
+			 Bundle b = i.getExtras();
+			 if((b != null) && (b.size() > 0)){
+				 Set<String> s = b.keySet(); 
+		         for (String keyname : s) {
+	        		 if (b.get(keyname) instanceof String){
+	        			 m += " --es '" + keyname + "' '" + b.get(keyname).toString() + "'"; }
+	        		 else if (b.get(keyname) instanceof Boolean){
+	        			 m += " --ez '" + keyname + "' "  + b.get(keyname).toString(); } 	        		 
+	        		 else if (b.get(keyname) instanceof Integer){
+	        			 m += " --ei '" + keyname + "' "  + notEmpty(Integer.toString(b.getInt(keyname))); }     
+	        		 else if (b.get(keyname) instanceof Float){
+	        			 m += " --ef '" + keyname + "' "  + notEmpty(Float.toString(b.getFloat(keyname))); }     
+	        		 else if (b.get(keyname) instanceof Double){
+	        			 m += " --ed '" + keyname + "' "  + notEmpty(Double.toString(b.getDouble(keyname))); } 
+	        		 else if (b.get(keyname) instanceof Long){
+	        			 m += " --el '" + keyname + "' "  + notEmpty(Long.toString(b.getLong(keyname))); }           		 
+	        		 else if (b.get(keyname) instanceof Object){
+	        			 // Fall back in case you can send some custom object
+	        			 // Seen this as serialized objects, hashmaps, etc... might add some reflection and see if we can parse more
+	        			 m += " UNKNOWN_TYPE(key: "  + keyname + " value: "+ b.get(keyname).toString() + ")";
+	        		 }
+	        		 else {
+	        			m += " [[[ ERROR UNKNOWN TYPE for '" + keyname + "' class is: " + b.get(keyname).getClass() + "]]]"; 
+	        		 }
+		         }			 
+			 }
+			 
+			 if(i.getFlags() > 0)
+				 m += " -f 0x" + Integer.toHexString(i.getFlags());
+			 if(i.getPackage() != null)
+				 m += " '" + i.getPackage() + "'";
+			 if(i.getComponent() != null)
+				 m += " " + i.getComponent().flattenToString();			 
+	 
+			 
+		 } catch(Exception e){
+			m = "FAILED TO PARSE INTENT";
+		 }
+		 
+		 // for debugging, we might have missed something above... consider turn this off later
+		 android.util.Log.wtf(TRACE_TAG + " INTENT toString ", notEmpty(i.toString()));
+		 
+	     return android.util.Log.wtf(logtag, notEmpty(m));
+	 }		 
+	 static public int trace_getextras(Bundle b) {
+		 String m = "";
+		 if((b == null) || (b.size() < 1)){
+			 return 0;  //I don't have a reason to log empty bundles
+		 }
+		 
+		 //Warning: Getting all these as Strings, but that might not be the correct type
+		 Set<String> s = b.keySet(); 
+         for (String keyname : s) {
+        	 m += "name: " + keyname;
+        	 try {
+        		 if (b.get(keyname) instanceof String){
+        			 m += " value: " + b.get(keyname).toString(); }
+        		 else if (b.get(keyname) instanceof Integer){
+        			 m += " value (int): " + notEmpty(Integer.toString(b.getInt(keyname))); }     
+        		 else if (b.get(keyname) instanceof Float){
+        			 m += " value (float): " + notEmpty(Float.toString(b.getFloat(keyname))); }     
+        		 else if (b.get(keyname) instanceof Double){
+        			 m += " value (double): " + notEmpty(Double.toString(b.getDouble(keyname))); } 
+        		 else if (b.get(keyname) instanceof Long){
+        			 m += " value (double): " + notEmpty(Long.toString(b.getLong(keyname))); }           		 
+        		 else if (b.get(keyname) instanceof Object){
+            		m += " value (obj): " + b.get(keyname).toString();  }
+        		 else {
+        			m += " value - ERROR UNKNOWN TYPE: " + b.get(keyname).getClass(); 
+        		 }
+            	 
+        	 } catch (Exception e){
+        		 m += " ERROR GETTING VALUE PROBABLY A TYPE FAILURE (what type is this?)";
+        	 }
+         }
+         
+		 Throwable t = new Throwable();
+		 String logtag = TRACE_TAG + " INTENT extras: " + t.getStackTrace()[1].getClassName();		  
+	     return android.util.Log.wtf(logtag, notEmpty(m));
+	 }	
+
+	 /* Trace Stuff for SQL
+	  * 
+	  *   Just want a clean SQL string in the logs. Lots of ways this can come in though
+	  *   (distinct y/n, limit y/n)
+	  * 
+	  */ 	
+	 static public int trace_sqlstring(String m) {
+		 Throwable t = new Throwable();
+		 String logtag = TRACE_TAG + " SQL String: " + t.getStackTrace()[1].getClassName();		  
+	     return android.util.Log.wtf(logtag, notEmpty(m));
+	 }	
+	 static public int trace_sqlstring(String m, String[] a) {
+		 Throwable t = new Throwable();
+		 String logtag = TRACE_TAG + " SQL String w/ args: " + t.getStackTrace()[1].getClassName();		  
+	     return android.util.Log.wtf(logtag, notEmpty(m + a.toString() ));
+	 }		 
+	 static public int trace_sqlquery(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy, String limit) {
+		 String sql = SQLiteQueryBuilder.buildQueryString(false, table, columns, selection, groupBy, having, orderBy, limit);
+		 Throwable t = new Throwable();
+		 String logtag = TRACE_TAG + " SQL Query: " + t.getStackTrace()[1].getClassName();		  
+	     return android.util.Log.wtf(logtag, notEmpty(sql));
+	 }	
+	 static public int trace_sqlquery(boolean distinct, String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy, String limit) {
+		 String sql = SQLiteQueryBuilder.buildQueryString(distinct, table, columns, selection, groupBy, having, orderBy, limit);
+		 Throwable t = new Throwable();
+		 String logtag = TRACE_TAG + " SQL Query: " + t.getStackTrace()[1].getClassName();		  
+	     return android.util.Log.wtf(logtag, notEmpty(sql));
+	 }	
+	 static public int trace_sqlquery(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
+		 String sql = SQLiteQueryBuilder.buildQueryString(false, table, columns, selection, groupBy, having, orderBy, null);
+		 Throwable t = new Throwable();
+		 String logtag = TRACE_TAG + " SQL Query: " + t.getStackTrace()[1].getClassName();		  
+	     return android.util.Log.wtf(logtag, notEmpty(sql));
+	 }	
+	 static public int trace_sqlquery(boolean distinct, String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
+		 String sql = SQLiteQueryBuilder.buildQueryString(distinct, table, columns, selection, groupBy, having, orderBy, null);
+		 Throwable t = new Throwable();
+		 String logtag = TRACE_TAG + " SQL Query: " + t.getStackTrace()[1].getClassName();		  
+	     return android.util.Log.wtf(logtag, notEmpty(sql));
+	 }	 
+	 static public int trace_sqlupdate(String table, ContentValues values, String whereClause, String[] whereArgs) {
+		 
+		 StringBuilder sqlsub = new StringBuilder(120);
+         StringBuilder sql = new StringBuilder(120);
+         sql.append("UPDATE ");
+         sql.append(table);
+         sql.append(" SET ");
+
+         // move all bind args to one array
+         int setValuesSize = values.size();
+         int bindArgsSize = (whereArgs == null) ? setValuesSize : (setValuesSize + whereArgs.length);
+         Object[] bindArgs = new Object[bindArgsSize];
+         int i = 0;
+         
+         //Added this code to be API 1 compatible: keySet() requires API 11
+         Set<String> ar = new HashSet<String>();
+         Set<Entry<String, Object>> s=values.valueSet();
+         int x = 0;
+         for (Entry<String, Object> entry : s) {
+             ar.add(entry.getKey());
+             sqlsub.append((x > 0) ? ", " : "");
+             sqlsub.append(entry.getValue());
+             x++;
+         }
+         
+         for (String colName : ar ) {
+             sql.append((i > 0) ? "," : "");
+             sql.append(colName);
+             bindArgs[i++] = values.get(colName);
+             sql.append("=?");
+         }
+         if (whereArgs != null) {
+             for (i = setValuesSize; i < bindArgsSize; i++) {
+                 bindArgs[i] = whereArgs[i - setValuesSize];
+             }
+         }
+         if (!TextUtils.isEmpty(whereClause)) {
+             sql.append(" WHERE ");
+             sql.append(whereClause);
+         }
+
+         String m = sql.toString() + "; [" + sqlsub + "]";
+         
+		 Throwable t = new Throwable();
+		 String logtag = TRACE_TAG + " SQL String: " + t.getStackTrace()[1].getClassName();		  
+	     return android.util.Log.wtf(logtag, notEmpty(m));
+	 }		 
+
+	 static public int trace_basicnamevaluepair(String m, String n) {
+		 Throwable t = new Throwable();
+		 String logtag = TRACE_TAG + " name value: " + t.getStackTrace()[1].getClassName();		  
+	     return android.util.Log.wtf(logtag, notEmpty(m) + ": " + notEmpty(n));
+	 }	
+	 
+	 /* Trace String Compare
+	  *   Logs out a string being compared. Log right before or after this line
+	  *   invoke-virtual {v3, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+	  *   
+	  *   There is a known issue with this and Android 2.3 (and lower?) where this seems to go unlogged
+	  *   Issue maybe with the throwable object and some classes. Logging can still work, but you wont
+	  *   be able to automatically get the class/method name of the caller.
+	  *   
+	  * *** SMALI CODE TO ADD ***
+	  * invoke-static {v1, v2}, Liglogger;->trace_stringcompare(Ljava/lang/String;Ljava/lang/String;)I  
+	  * 
+	  */ 	 	 
+	 static public int trace_stringcompare(String m, String n) {
+		 Throwable t = new Throwable();
+		 String logtag = TRACE_TAG + " string compare: " + t.getStackTrace()[1].getClassName();		  
+	     return android.util.Log.wtf(logtag, notEmpty(m) + " == " + notEmpty(n));
+	 }	
+	 static public int trace_stringcompare(String m, Object n) {
+		 Throwable t = new Throwable();
+		 String logtag = TRACE_TAG + " string compare: " + t.getStackTrace()[1].getClassName();	
+		 if(n == null ){
+			 return android.util.Log.wtf(logtag, notEmpty(m) + " == <empty value>");
+		 }
+	     return android.util.Log.wtf(logtag, notEmpty(m) + " == " + notEmpty(n.toString()));
+	 }		 
+	 
+	 
+	 
+	 
 	 
 	//Utility Classes
 	public static String ListToHex(byte[] data){
@@ -519,4 +800,7 @@ public class iglogger {
 		}
 		return s;
 	}
+	
+	
+	
 }
