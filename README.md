@@ -31,6 +31,19 @@ it is recommended you increase the "locals" count by 1 at the start of the metho
 This ensures you are not overwriting application data which may have already been in "v9". 
 In the previous example, "v1" was an of type "int".
 
+"Trace" methods are designed to work with the APKSmash script (injects logging
+automatically based on Android API calls). Some of these can be useful for logging items
+by hand as well. For example, APKSmash will inject the "trace_intent_sendactivity" method
+and pass the Intent to it before the Activity is started. The code might look like this.
+
+    invoke-static {v1}, Liglogger;->trace_intent_sendactivity(Landroid/content/Intent;)I
+    invoke-virtual {v0, v1}, Landroid/app/Activity;->startActivity(Landroid/content/Intent;)V
+
+The Intent trace loggers will attempt to parse the Intent in two ways. The first is a simple
+call to toString (you might see this for the Intent in the logs already). The second way
+is to export the proper "am" (Activity Manager) command to allow resending the Intent
+from an adb shell (note: this is still a little buggy but should get you started)
+    
 
 Tips for Errors 
 ===============
@@ -47,10 +60,12 @@ http://source.android.com/tech/dalvik/dex-format.html
 
 ("Value Formats" table)
 
+If logging looks strange or missing from Logcat in DDMS/Monitor, try "adb logcat". 
 
 Version History
 ===============
 
-v2.50 - Added a lot more "trace" classes (for use mainly with APKSmash).
-	Handles more types of objects and parsing (Intents, SQL calls)
+v2.50 
+ Added a lot more "trace" classes (for use mainly with APKSmash).
+ Handles more types of objects and parsing (Intents, SQL calls)
 	
