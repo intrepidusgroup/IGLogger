@@ -52,18 +52,18 @@
     .prologue
     const/16 v6, 0x10
 
-    .line 788
+    .line 825
     invoke-virtual {p0}, Ljava/lang/String;->length()I
 
     move-result v2
 
-    .line 789
+    .line 826
     .local v2, len:I
     div-int/lit8 v3, v2, 0x2
 
     new-array v0, v3, [B
 
-    .line 790
+    .line 827
     .local v0, data:[B
     const/4 v1, 0x0
 
@@ -71,10 +71,10 @@
     :goto_0
     if-lt v1, v2, :cond_0
 
-    .line 794
+    .line 831
     return-object v0
 
-    .line 791
+    .line 828
     :cond_0
     div-int/lit8 v3, v1, 0x2
 
@@ -88,7 +88,7 @@
 
     shl-int/lit8 v4, v4, 0x4
 
-    .line 792
+    .line 829
     add-int/lit8 v5, v1, 0x1
 
     invoke-virtual {p0, v5}, Ljava/lang/String;->charAt(I)C
@@ -103,10 +103,10 @@
 
     int-to-byte v4, v4
 
-    .line 791
+    .line 828
     aput-byte v4, v0, v3
 
-    .line 790
+    .line 827
     add-int/lit8 v1, v1, 0x2
 
     goto :goto_0
@@ -117,10 +117,10 @@
     .parameter "data"
 
     .prologue
-    .line 777
+    .line 814
     const-string v3, ""
 
-    .line 778
+    .line 815
     .local v3, string:Ljava/lang/String;
     const/4 v1, 0x0
 
@@ -130,14 +130,14 @@
 
     if-lt v1, v4, :cond_0
 
-    .line 784
+    .line 821
     return-object v3
 
-    .line 779
+    .line 816
     :cond_0
     aget-byte v0, p0, v1
 
-    .line 780
+    .line 817
     .local v0, b:B
     new-instance v2, Ljava/lang/StringBuffer;
 
@@ -151,7 +151,7 @@
 
     invoke-direct {v2, v4}, Ljava/lang/StringBuffer;-><init>(Ljava/lang/String;)V
 
-    .line 781
+    .line 818
     .local v2, s:Ljava/lang/StringBuffer;
     invoke-virtual {v2}, Ljava/lang/StringBuffer;->length()I
 
@@ -167,7 +167,7 @@
 
     invoke-virtual {v2, v4, v5}, Ljava/lang/StringBuffer;->insert(IC)Ljava/lang/StringBuffer;
 
-    .line 782
+    .line 819
     :cond_1
     new-instance v4, Ljava/lang/StringBuilder;
 
@@ -185,12 +185,12 @@
 
     move-result-object v3
 
-    .line 778
+    .line 815
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
 
-    .line 780
+    .line 817
     .end local v2           #s:Ljava/lang/StringBuffer;
     .restart local v0       #b:B
     :cond_2
@@ -2032,7 +2032,7 @@
     .parameter "s"
 
     .prologue
-    .line 798
+    .line 835
     if-eqz p0, :cond_0
 
     invoke-virtual {p0}, Ljava/lang/String;->length()I
@@ -2043,11 +2043,11 @@
 
     if-ge v0, v1, :cond_1
 
-    .line 799
+    .line 836
     :cond_0
     const-string p0, "<empty value>"
 
-    .line 801
+    .line 838
     .end local p0
     :cond_1
     return-object p0
@@ -2133,12 +2133,14 @@
     .parameter "n"
 
     .prologue
-    .line 740
+    const/4 v4, 0x1
+
+    .line 771
     new-instance v1, Ljava/lang/Throwable;
 
     invoke-direct {v1}, Ljava/lang/Throwable;-><init>()V
 
-    .line 741
+    .line 772
     .local v1, t:Ljava/lang/Throwable;
     new-instance v2, Ljava/lang/StringBuilder;
 
@@ -2160,8 +2162,6 @@
 
     move-result-object v3
 
-    const/4 v4, 0x1
-
     aget-object v3, v3, v4
 
     invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getClassName()Ljava/lang/String;
@@ -2176,8 +2176,74 @@
 
     move-result-object v0
 
-    .line 742
+    .line 773
     .local v0, logtag:Ljava/lang/String;
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, "->"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getMethodName()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 774
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, " Line "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getLineNumber()I
+
+    move-result v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 775
     new-instance v2, Ljava/lang/StringBuilder;
 
     invoke-static {p0}, Liglogger;->notEmpty(Ljava/lang/String;)Ljava/lang/String;
@@ -2338,7 +2404,7 @@
     if-eqz p0, :cond_0
 
     .line 490
-    const-string v1, "returning: TRUE"
+    const-string v1, " returning: TRUE"
 
     .line 494
     :goto_0
@@ -2354,7 +2420,7 @@
 
     .line 492
     :cond_0
-    const-string v1, "returning: FALSE"
+    const-string v1, " returning: FALSE"
 
     goto :goto_0
 .end method
@@ -2364,6 +2430,8 @@
     .parameter "m"
 
     .prologue
+    const/4 v4, 0x1
+
     .line 505
     new-instance v1, Ljava/lang/Throwable;
 
@@ -2391,8 +2459,6 @@
 
     move-result-object v3
 
-    const/4 v4, 0x1
-
     aget-object v3, v3, v4
 
     invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getClassName()Ljava/lang/String;
@@ -2409,6 +2475,72 @@
 
     .line 507
     .local v0, logtag:Ljava/lang/String;
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, "->"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getMethodName()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 508
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, " Line "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getLineNumber()I
+
+    move-result v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 509
     invoke-static {p0}, Liglogger;->notEmpty(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v2
@@ -2425,12 +2557,14 @@
     .parameter "m"
 
     .prologue
-    .line 510
+    const/4 v4, 0x1
+
+    .line 512
     new-instance v1, Ljava/lang/Throwable;
 
     invoke-direct {v1}, Ljava/lang/Throwable;-><init>()V
 
-    .line 511
+    .line 513
     .local v1, t:Ljava/lang/Throwable;
     new-instance v2, Ljava/lang/StringBuilder;
 
@@ -2452,8 +2586,6 @@
 
     move-result-object v3
 
-    const/4 v4, 0x1
-
     aget-object v3, v3, v4
 
     invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getClassName()Ljava/lang/String;
@@ -2468,8 +2600,74 @@
 
     move-result-object v0
 
-    .line 512
+    .line 514
     .local v0, logtag:Ljava/lang/String;
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, "->"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getMethodName()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 515
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, " Line "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getLineNumber()I
+
+    move-result v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 516
     invoke-static {p0}, Liglogger;->notEmpty(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v2
@@ -2488,10 +2686,10 @@
     .prologue
     const/4 v10, 0x1
 
-    .line 615
+    .line 630
     const-string v3, ""
 
-    .line 616
+    .line 631
     .local v3, m:Ljava/lang/String;
     if-eqz p0, :cond_0
 
@@ -2501,21 +2699,21 @@
 
     if-ge v6, v10, :cond_1
 
-    .line 617
+    .line 632
     :cond_0
     const/4 v6, 0x0
 
-    .line 648
+    .line 665
     :goto_0
     return v6
 
-    .line 621
+    .line 636
     :cond_1
     invoke-virtual {p0}, Landroid/os/Bundle;->keySet()Ljava/util/Set;
 
     move-result-object v4
 
-    .line 622
+    .line 637
     .local v4, s:Ljava/util/Set;,"Ljava/util/Set<Ljava/lang/String;>;"
     invoke-interface {v4}, Ljava/util/Set;->iterator()Ljava/util/Iterator;
 
@@ -2528,12 +2726,12 @@
 
     if-nez v7, :cond_2
 
-    .line 646
+    .line 661
     new-instance v5, Ljava/lang/Throwable;
 
     invoke-direct {v5}, Ljava/lang/Throwable;-><init>()V
 
-    .line 647
+    .line 662
     .local v5, t:Ljava/lang/Throwable;
     new-instance v6, Ljava/lang/StringBuilder;
 
@@ -2569,8 +2767,74 @@
 
     move-result-object v2
 
-    .line 648
+    .line 663
     .local v2, logtag:Ljava/lang/String;
+    new-instance v6, Ljava/lang/StringBuilder;
+
+    invoke-static {v2}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v7
+
+    invoke-direct {v6, v7}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v7, "->"
+
+    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    invoke-virtual {v5}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v7
+
+    aget-object v7, v7, v10
+
+    invoke-virtual {v7}, Ljava/lang/StackTraceElement;->getMethodName()Ljava/lang/String;
+
+    move-result-object v7
+
+    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    .line 664
+    new-instance v6, Ljava/lang/StringBuilder;
+
+    invoke-static {v2}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v7
+
+    invoke-direct {v6, v7}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v7, " Line "
+
+    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    invoke-virtual {v5}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v7
+
+    aget-object v7, v7, v10
+
+    invoke-virtual {v7}, Ljava/lang/StackTraceElement;->getLineNumber()I
+
+    move-result v7
+
+    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    .line 665
     invoke-static {v3}, Liglogger;->notEmpty(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v6
@@ -2579,9 +2843,9 @@
 
     move-result v6
 
-    goto :goto_0
+    goto/16 :goto_0
 
-    .line 622
+    .line 637
     .end local v2           #logtag:Ljava/lang/String;
     .end local v5           #t:Ljava/lang/Throwable;
     :cond_2
@@ -2591,7 +2855,7 @@
 
     check-cast v1, Ljava/lang/String;
 
-    .line 623
+    .line 638
     .local v1, keyname:Ljava/lang/String;
     new-instance v7, Ljava/lang/StringBuilder;
 
@@ -2615,7 +2879,7 @@
 
     move-result-object v3
 
-    .line 625
+    .line 640
     :try_start_0
     invoke-virtual {p0, v1}, Landroid/os/Bundle;->get(Ljava/lang/String;)Ljava/lang/Object;
 
@@ -2625,7 +2889,7 @@
 
     if-eqz v7, :cond_3
 
-    .line 626
+    .line 641
     new-instance v7, Ljava/lang/StringBuilder;
 
     invoke-static {v3}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
@@ -2656,9 +2920,9 @@
 
     move-result-object v3
 
-    goto :goto_1
+    goto/16 :goto_1
 
-    .line 627
+    .line 642
     :cond_3
     invoke-virtual {p0, v1}, Landroid/os/Bundle;->get(Ljava/lang/String;)Ljava/lang/Object;
 
@@ -2668,7 +2932,7 @@
 
     if-eqz v7, :cond_4
 
-    .line 628
+    .line 643
     new-instance v7, Ljava/lang/StringBuilder;
 
     invoke-static {v3}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
@@ -2705,7 +2969,7 @@
 
     goto/16 :goto_1
 
-    .line 629
+    .line 644
     :cond_4
     invoke-virtual {p0, v1}, Landroid/os/Bundle;->get(Ljava/lang/String;)Ljava/lang/Object;
 
@@ -2715,7 +2979,7 @@
 
     if-eqz v7, :cond_5
 
-    .line 630
+    .line 645
     new-instance v7, Ljava/lang/StringBuilder;
 
     invoke-static {v3}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
@@ -2752,7 +3016,7 @@
 
     goto/16 :goto_1
 
-    .line 631
+    .line 646
     :cond_5
     invoke-virtual {p0, v1}, Landroid/os/Bundle;->get(Ljava/lang/String;)Ljava/lang/Object;
 
@@ -2762,7 +3026,7 @@
 
     if-eqz v7, :cond_6
 
-    .line 632
+    .line 647
     new-instance v7, Ljava/lang/StringBuilder;
 
     invoke-static {v3}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
@@ -2799,7 +3063,7 @@
 
     goto/16 :goto_1
 
-    .line 633
+    .line 648
     :cond_6
     invoke-virtual {p0, v1}, Landroid/os/Bundle;->get(Ljava/lang/String;)Ljava/lang/Object;
 
@@ -2809,7 +3073,7 @@
 
     if-eqz v7, :cond_7
 
-    .line 634
+    .line 649
     new-instance v7, Ljava/lang/StringBuilder;
 
     invoke-static {v3}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
@@ -2846,7 +3110,7 @@
 
     goto/16 :goto_1
 
-    .line 635
+    .line 650
     :cond_7
     invoke-virtual {p0, v1}, Landroid/os/Bundle;->get(Ljava/lang/String;)Ljava/lang/Object;
 
@@ -2856,7 +3120,7 @@
 
     if-eqz v7, :cond_8
 
-    .line 636
+    .line 651
     new-instance v7, Ljava/lang/StringBuilder;
 
     invoke-static {v3}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
@@ -2889,7 +3153,7 @@
 
     goto/16 :goto_1
 
-    .line 638
+    .line 653
     :cond_8
     new-instance v7, Ljava/lang/StringBuilder;
 
@@ -2925,11 +3189,11 @@
 
     goto/16 :goto_1
 
-    .line 641
+    .line 656
     :catch_0
     move-exception v0
 
-    .line 642
+    .line 657
     .local v0, e:Ljava/lang/Exception;
     new-instance v7, Ljava/lang/StringBuilder;
 
@@ -2957,12 +3221,14 @@
     .parameter "m"
 
     .prologue
-    .line 525
+    const/4 v4, 0x1
+
+    .line 533
     new-instance v1, Ljava/lang/Throwable;
 
     invoke-direct {v1}, Ljava/lang/Throwable;-><init>()V
 
-    .line 526
+    .line 534
     .local v1, t:Ljava/lang/Throwable;
     new-instance v2, Ljava/lang/StringBuilder;
 
@@ -2984,8 +3250,6 @@
 
     move-result-object v3
 
-    const/4 v4, 0x1
-
     aget-object v3, v3, v4
 
     invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getClassName()Ljava/lang/String;
@@ -3000,8 +3264,74 @@
 
     move-result-object v0
 
-    .line 527
+    .line 535
     .local v0, logtag:Ljava/lang/String;
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, "->"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getMethodName()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 536
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, " Line "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getLineNumber()I
+
+    move-result v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 537
     invoke-static {p0}, Liglogger;->notEmpty(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v2
@@ -3018,7 +3348,7 @@
     .parameter "i"
 
     .prologue
-    .line 535
+    .line 547
     const-string v0, "UNKNOWN"
 
     const-string v1, "UNKNOWN"
@@ -3037,12 +3367,14 @@
     .parameter "sendorreceive"
 
     .prologue
-    .line 556
+    const/4 v10, 0x1
+
+    .line 568
     new-instance v6, Ljava/lang/Throwable;
 
     invoke-direct {v6}, Ljava/lang/Throwable;-><init>()V
 
-    .line 557
+    .line 569
     .local v6, t:Ljava/lang/Throwable;
     new-instance v7, Ljava/lang/StringBuilder;
 
@@ -3090,8 +3422,74 @@
 
     move-result-object v3
 
-    .line 558
+    .line 570
     .local v3, logtag:Ljava/lang/String;
+    new-instance v7, Ljava/lang/StringBuilder;
+
+    invoke-static {v3}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v8
+
+    invoke-direct {v7, v8}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v8, "->"
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v6}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v8
+
+    aget-object v8, v8, v10
+
+    invoke-virtual {v8}, Ljava/lang/StackTraceElement;->getMethodName()Ljava/lang/String;
+
+    move-result-object v8
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    .line 571
+    new-instance v7, Ljava/lang/StringBuilder;
+
+    invoke-static {v3}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v8
+
+    invoke-direct {v7, v8}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v8, " Line "
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v6}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v8
+
+    aget-object v8, v8, v10
+
+    invoke-virtual {v8}, Ljava/lang/StackTraceElement;->getLineNumber()I
+
+    move-result v8
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    .line 573
     new-instance v7, Ljava/lang/StringBuilder;
 
     const-string v8, "am "
@@ -3106,7 +3504,7 @@
 
     move-result-object v4
 
-    .line 562
+    .line 577
     .local v4, m:Ljava/lang/String;
     :try_start_0
     invoke-virtual {p0}, Landroid/content/Intent;->getAction()Ljava/lang/String;
@@ -3115,7 +3513,7 @@
 
     if-eqz v7, :cond_0
 
-    .line 563
+    .line 578
     new-instance v7, Ljava/lang/StringBuilder;
 
     invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
@@ -3148,7 +3546,7 @@
 
     move-result-object v4
 
-    .line 564
+    .line 579
     :cond_0
     invoke-virtual {p0}, Landroid/content/Intent;->getDataString()Ljava/lang/String;
 
@@ -3156,7 +3554,7 @@
 
     if-eqz v7, :cond_1
 
-    .line 565
+    .line 580
     new-instance v7, Ljava/lang/StringBuilder;
 
     invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
@@ -3189,7 +3587,7 @@
 
     move-result-object v4
 
-    .line 566
+    .line 581
     :cond_1
     invoke-virtual {p0}, Landroid/content/Intent;->getType()Ljava/lang/String;
 
@@ -3197,7 +3595,7 @@
 
     if-eqz v7, :cond_2
 
-    .line 567
+    .line 582
     new-instance v7, Ljava/lang/StringBuilder;
 
     invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
@@ -3230,13 +3628,13 @@
 
     move-result-object v4
 
-    .line 570
+    .line 585
     :cond_2
     invoke-virtual {p0}, Landroid/content/Intent;->getExtras()Landroid/os/Bundle;
 
     move-result-object v0
 
-    .line 571
+    .line 586
     .local v0, b:Landroid/os/Bundle;
     if-eqz v0, :cond_3
 
@@ -3246,12 +3644,12 @@
 
     if-lez v7, :cond_3
 
-    .line 572
+    .line 587
     invoke-virtual {v0}, Landroid/os/Bundle;->keySet()Ljava/util/Set;
 
     move-result-object v5
 
-    .line 573
+    .line 588
     .local v5, s:Ljava/util/Set;,"Ljava/util/Set<Ljava/lang/String;>;"
     invoke-interface {v5}, Ljava/util/Set;->iterator()Ljava/util/Iterator;
 
@@ -3264,7 +3662,7 @@
 
     if-nez v8, :cond_7
 
-    .line 597
+    .line 612
     .end local v5           #s:Ljava/util/Set;,"Ljava/util/Set<Ljava/lang/String;>;"
     :cond_3
     invoke-virtual {p0}, Landroid/content/Intent;->getFlags()I
@@ -3273,7 +3671,7 @@
 
     if-lez v7, :cond_4
 
-    .line 598
+    .line 613
     new-instance v7, Ljava/lang/StringBuilder;
 
     invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
@@ -3304,7 +3702,7 @@
 
     move-result-object v4
 
-    .line 599
+    .line 614
     :cond_4
     invoke-virtual {p0}, Landroid/content/Intent;->getPackage()Ljava/lang/String;
 
@@ -3312,7 +3710,7 @@
 
     if-eqz v7, :cond_5
 
-    .line 600
+    .line 615
     new-instance v7, Ljava/lang/StringBuilder;
 
     invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
@@ -3345,7 +3743,7 @@
 
     move-result-object v4
 
-    .line 601
+    .line 616
     :cond_5
     invoke-virtual {p0}, Landroid/content/Intent;->getComponent()Landroid/content/ComponentName;
 
@@ -3353,7 +3751,7 @@
 
     if-eqz v7, :cond_6
 
-    .line 602
+    .line 617
     new-instance v7, Ljava/lang/StringBuilder;
 
     invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
@@ -3386,7 +3784,7 @@
 
     move-result-object v4
 
-    .line 610
+    .line 625
     .end local v0           #b:Landroid/os/Bundle;
     :cond_6
     :goto_1
@@ -3420,7 +3818,7 @@
 
     invoke-static {v7, v8}, Landroid/util/Log;->wtf(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 612
+    .line 627
     invoke-static {v4}, Liglogger;->notEmpty(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v7
@@ -3431,7 +3829,7 @@
 
     return v7
 
-    .line 573
+    .line 588
     .restart local v0       #b:Landroid/os/Bundle;
     .restart local v5       #s:Ljava/util/Set;,"Ljava/util/Set<Ljava/lang/String;>;"
     :cond_7
@@ -3442,7 +3840,7 @@
 
     check-cast v2, Ljava/lang/String;
 
-    .line 574
+    .line 589
     .local v2, keyname:Ljava/lang/String;
     invoke-virtual {v0, v2}, Landroid/os/Bundle;->get(Ljava/lang/String;)Ljava/lang/Object;
 
@@ -3452,7 +3850,7 @@
 
     if-eqz v8, :cond_8
 
-    .line 575
+    .line 590
     new-instance v8, Ljava/lang/StringBuilder;
 
     invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
@@ -3501,7 +3899,7 @@
 
     goto/16 :goto_0
 
-    .line 576
+    .line 591
     :cond_8
     invoke-virtual {v0, v2}, Landroid/os/Bundle;->get(Ljava/lang/String;)Ljava/lang/Object;
 
@@ -3511,7 +3909,7 @@
 
     if-eqz v8, :cond_9
 
-    .line 577
+    .line 592
     new-instance v8, Ljava/lang/StringBuilder;
 
     invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
@@ -3554,7 +3952,7 @@
 
     goto/16 :goto_0
 
-    .line 578
+    .line 593
     :cond_9
     invoke-virtual {v0, v2}, Landroid/os/Bundle;->get(Ljava/lang/String;)Ljava/lang/Object;
 
@@ -3564,7 +3962,7 @@
 
     if-eqz v8, :cond_a
 
-    .line 579
+    .line 594
     new-instance v8, Ljava/lang/StringBuilder;
 
     invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
@@ -3611,7 +4009,7 @@
 
     goto/16 :goto_0
 
-    .line 580
+    .line 595
     :cond_a
     invoke-virtual {v0, v2}, Landroid/os/Bundle;->get(Ljava/lang/String;)Ljava/lang/Object;
 
@@ -3621,7 +4019,7 @@
 
     if-eqz v8, :cond_b
 
-    .line 581
+    .line 596
     new-instance v8, Ljava/lang/StringBuilder;
 
     invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
@@ -3668,7 +4066,7 @@
 
     goto/16 :goto_0
 
-    .line 582
+    .line 597
     :cond_b
     invoke-virtual {v0, v2}, Landroid/os/Bundle;->get(Ljava/lang/String;)Ljava/lang/Object;
 
@@ -3678,7 +4076,7 @@
 
     if-eqz v8, :cond_c
 
-    .line 583
+    .line 598
     new-instance v8, Ljava/lang/StringBuilder;
 
     invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
@@ -3725,7 +4123,7 @@
 
     goto/16 :goto_0
 
-    .line 584
+    .line 599
     :cond_c
     invoke-virtual {v0, v2}, Landroid/os/Bundle;->get(Ljava/lang/String;)Ljava/lang/Object;
 
@@ -3735,7 +4133,7 @@
 
     if-eqz v8, :cond_d
 
-    .line 585
+    .line 600
     new-instance v8, Ljava/lang/StringBuilder;
 
     invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
@@ -3782,7 +4180,7 @@
 
     goto/16 :goto_0
 
-    .line 586
+    .line 601
     :cond_d
     invoke-virtual {v0, v2}, Landroid/os/Bundle;->get(Ljava/lang/String;)Ljava/lang/Object;
 
@@ -3792,7 +4190,7 @@
 
     if-eqz v8, :cond_e
 
-    .line 589
+    .line 604
     new-instance v8, Ljava/lang/StringBuilder;
 
     invoke-static {v4}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
@@ -3841,7 +4239,7 @@
 
     goto/16 :goto_0
 
-    .line 592
+    .line 607
     :cond_e
     new-instance v8, Ljava/lang/StringBuilder;
 
@@ -3893,14 +4291,14 @@
 
     goto/16 :goto_0
 
-    .line 605
+    .line 620
     .end local v0           #b:Landroid/os/Bundle;
     .end local v2           #keyname:Ljava/lang/String;
     .end local v5           #s:Ljava/util/Set;,"Ljava/util/Set<Ljava/lang/String;>;"
     :catch_0
     move-exception v1
 
-    .line 606
+    .line 621
     .local v1, e:Ljava/lang/Exception;
     const-string v4, "FAILED TO PARSE INTENT"
 
@@ -3912,12 +4310,14 @@
     .parameter "m"
 
     .prologue
-    .line 530
+    const/4 v4, 0x1
+
+    .line 540
     new-instance v1, Ljava/lang/Throwable;
 
     invoke-direct {v1}, Ljava/lang/Throwable;-><init>()V
 
-    .line 531
+    .line 541
     .local v1, t:Ljava/lang/Throwable;
     new-instance v2, Ljava/lang/StringBuilder;
 
@@ -3939,8 +4339,6 @@
 
     move-result-object v3
 
-    const/4 v4, 0x1
-
     aget-object v3, v3, v4
 
     invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getClassName()Ljava/lang/String;
@@ -3955,8 +4353,74 @@
 
     move-result-object v0
 
-    .line 532
+    .line 542
     .local v0, logtag:Ljava/lang/String;
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, "->"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getMethodName()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 543
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, " Line "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getLineNumber()I
+
+    move-result v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 544
     invoke-static {p0}, Liglogger;->notEmpty(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v2
@@ -3973,7 +4437,7 @@
     .parameter "i"
 
     .prologue
-    .line 547
+    .line 559
     const-string v0, "start"
 
     const-string v1, "RECEIVED"
@@ -3990,7 +4454,7 @@
     .parameter "i"
 
     .prologue
-    .line 553
+    .line 565
     const-string v0, "broadcast"
 
     const-string v1, "RECEIVED"
@@ -4007,7 +4471,7 @@
     .parameter "i"
 
     .prologue
-    .line 550
+    .line 562
     const-string v0, "startservice"
 
     const-string v1, "RECEIVED"
@@ -4024,7 +4488,7 @@
     .parameter "i"
 
     .prologue
-    .line 538
+    .line 550
     const-string v0, "start"
 
     const-string v1, "SENDING"
@@ -4041,7 +4505,7 @@
     .parameter "i"
 
     .prologue
-    .line 544
+    .line 556
     const-string v0, "broadcast"
 
     const-string v1, "SENDING"
@@ -4058,7 +4522,7 @@
     .parameter "i"
 
     .prologue
-    .line 541
+    .line 553
     const-string v0, "startservice"
 
     const-string v1, "SENDING"
@@ -4075,12 +4539,14 @@
     .parameter "m"
 
     .prologue
-    .line 520
+    const/4 v4, 0x1
+
+    .line 526
     new-instance v1, Ljava/lang/Throwable;
 
     invoke-direct {v1}, Ljava/lang/Throwable;-><init>()V
 
-    .line 521
+    .line 527
     .local v1, t:Ljava/lang/Throwable;
     new-instance v2, Ljava/lang/StringBuilder;
 
@@ -4102,8 +4568,6 @@
 
     move-result-object v3
 
-    const/4 v4, 0x1
-
     aget-object v3, v3, v4
 
     invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getClassName()Ljava/lang/String;
@@ -4118,8 +4582,74 @@
 
     move-result-object v0
 
-    .line 522
+    .line 528
     .local v0, logtag:Ljava/lang/String;
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, "->"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getMethodName()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 529
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, " Line "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getLineNumber()I
+
+    move-result v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 530
     invoke-static {p0}, Liglogger;->notEmpty(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v2
@@ -4258,12 +4788,14 @@
     .parameter "m"
 
     .prologue
-    .line 515
+    const/4 v4, 0x1
+
+    .line 519
     new-instance v1, Ljava/lang/Throwable;
 
     invoke-direct {v1}, Ljava/lang/Throwable;-><init>()V
 
-    .line 516
+    .line 520
     .local v1, t:Ljava/lang/Throwable;
     new-instance v2, Ljava/lang/StringBuilder;
 
@@ -4285,8 +4817,6 @@
 
     move-result-object v3
 
-    const/4 v4, 0x1
-
     aget-object v3, v3, v4
 
     invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getClassName()Ljava/lang/String;
@@ -4301,8 +4831,74 @@
 
     move-result-object v0
 
-    .line 517
+    .line 521
     .local v0, logtag:Ljava/lang/String;
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, "->"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getMethodName()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 522
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, " Line "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getLineNumber()I
+
+    move-result v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 523
     invoke-static {p0}, Liglogger;->notEmpty(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v2
@@ -4325,7 +4921,7 @@
     .parameter "orderBy"
 
     .prologue
-    .line 680
+    .line 705
     const/4 v0, 0x0
 
     const/4 v7, 0x0
@@ -4346,13 +4942,13 @@
 
     move-result-object v9
 
-    .line 681
+    .line 706
     .local v9, sql:Ljava/lang/String;
     new-instance v10, Ljava/lang/Throwable;
 
     invoke-direct {v10}, Ljava/lang/Throwable;-><init>()V
 
-    .line 682
+    .line 707
     .local v10, t:Ljava/lang/Throwable;
     new-instance v0, Ljava/lang/StringBuilder;
 
@@ -4390,8 +4986,78 @@
 
     move-result-object v8
 
-    .line 683
+    .line 708
     .local v8, logtag:Ljava/lang/String;
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-static {v8}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v1, "->"
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v10}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v1
+
+    const/4 v2, 0x1
+
+    aget-object v1, v1, v2
+
+    invoke-virtual {v1}, Ljava/lang/StackTraceElement;->getMethodName()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v8
+
+    .line 709
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-static {v8}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v1, " Line "
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v10}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v1
+
+    const/4 v2, 0x1
+
+    aget-object v1, v1, v2
+
+    invoke-virtual {v1}, Ljava/lang/StackTraceElement;->getLineNumber()I
+
+    move-result v1
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v8
+
+    .line 710
     invoke-static {v9}, Liglogger;->notEmpty(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v0
@@ -4415,7 +5081,7 @@
     .parameter "limit"
 
     .prologue
-    .line 668
+    .line 689
     const/4 v0, 0x0
 
     move-object v1, p0
@@ -4436,13 +5102,13 @@
 
     move-result-object v9
 
-    .line 669
+    .line 690
     .local v9, sql:Ljava/lang/String;
     new-instance v10, Ljava/lang/Throwable;
 
     invoke-direct {v10}, Ljava/lang/Throwable;-><init>()V
 
-    .line 670
+    .line 691
     .local v10, t:Ljava/lang/Throwable;
     new-instance v0, Ljava/lang/StringBuilder;
 
@@ -4480,8 +5146,78 @@
 
     move-result-object v8
 
-    .line 671
+    .line 692
     .local v8, logtag:Ljava/lang/String;
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-static {v8}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v1, "->"
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v10}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v1
+
+    const/4 v2, 0x1
+
+    aget-object v1, v1, v2
+
+    invoke-virtual {v1}, Ljava/lang/StackTraceElement;->getMethodName()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v8
+
+    .line 693
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-static {v8}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v1, " Line "
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v10}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v1
+
+    const/4 v2, 0x1
+
+    aget-object v1, v1, v2
+
+    invoke-virtual {v1}, Ljava/lang/StackTraceElement;->getLineNumber()I
+
+    move-result v1
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v8
+
+    .line 694
     invoke-static {v9}, Liglogger;->notEmpty(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v0
@@ -4505,7 +5241,7 @@
     .parameter "orderBy"
 
     .prologue
-    .line 686
+    .line 713
     const/4 v7, 0x0
 
     move v0, p0
@@ -4526,13 +5262,13 @@
 
     move-result-object v9
 
-    .line 687
+    .line 714
     .local v9, sql:Ljava/lang/String;
     new-instance v10, Ljava/lang/Throwable;
 
     invoke-direct {v10}, Ljava/lang/Throwable;-><init>()V
 
-    .line 688
+    .line 715
     .local v10, t:Ljava/lang/Throwable;
     new-instance v0, Ljava/lang/StringBuilder;
 
@@ -4570,8 +5306,78 @@
 
     move-result-object v8
 
-    .line 689
+    .line 716
     .local v8, logtag:Ljava/lang/String;
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-static {v8}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v1, "->"
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v10}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v1
+
+    const/4 v2, 0x1
+
+    aget-object v1, v1, v2
+
+    invoke-virtual {v1}, Ljava/lang/StackTraceElement;->getMethodName()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v8
+
+    .line 717
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-static {v8}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v1, " Line "
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v10}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v1
+
+    const/4 v2, 0x1
+
+    aget-object v1, v1, v2
+
+    invoke-virtual {v1}, Ljava/lang/StackTraceElement;->getLineNumber()I
+
+    move-result v1
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v8
+
+    .line 718
     invoke-static {v9}, Liglogger;->notEmpty(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v0
@@ -4596,7 +5402,7 @@
     .parameter "limit"
 
     .prologue
-    .line 674
+    .line 697
     move v0, p0
 
     move-object v1, p1
@@ -4617,13 +5423,13 @@
 
     move-result-object v9
 
-    .line 675
+    .line 698
     .local v9, sql:Ljava/lang/String;
     new-instance v10, Ljava/lang/Throwable;
 
     invoke-direct {v10}, Ljava/lang/Throwable;-><init>()V
 
-    .line 676
+    .line 699
     .local v10, t:Ljava/lang/Throwable;
     new-instance v0, Ljava/lang/StringBuilder;
 
@@ -4661,8 +5467,78 @@
 
     move-result-object v8
 
-    .line 677
+    .line 700
     .local v8, logtag:Ljava/lang/String;
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-static {v8}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v1, "->"
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v10}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v1
+
+    const/4 v2, 0x1
+
+    aget-object v1, v1, v2
+
+    invoke-virtual {v1}, Ljava/lang/StackTraceElement;->getMethodName()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v8
+
+    .line 701
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-static {v8}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v1, " Line "
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v10}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v1
+
+    const/4 v2, 0x1
+
+    aget-object v1, v1, v2
+
+    invoke-virtual {v1}, Ljava/lang/StackTraceElement;->getLineNumber()I
+
+    move-result v1
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v8
+
+    .line 702
     invoke-static {v9}, Liglogger;->notEmpty(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v0
@@ -4679,12 +5555,14 @@
     .parameter "m"
 
     .prologue
-    .line 658
+    const/4 v4, 0x1
+
+    .line 675
     new-instance v1, Ljava/lang/Throwable;
 
     invoke-direct {v1}, Ljava/lang/Throwable;-><init>()V
 
-    .line 659
+    .line 676
     .local v1, t:Ljava/lang/Throwable;
     new-instance v2, Ljava/lang/StringBuilder;
 
@@ -4706,8 +5584,6 @@
 
     move-result-object v3
 
-    const/4 v4, 0x1
-
     aget-object v3, v3, v4
 
     invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getClassName()Ljava/lang/String;
@@ -4722,8 +5598,74 @@
 
     move-result-object v0
 
-    .line 660
+    .line 677
     .local v0, logtag:Ljava/lang/String;
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, "->"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getMethodName()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 678
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, " Line "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getLineNumber()I
+
+    move-result v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 679
     invoke-static {p0}, Liglogger;->notEmpty(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v2
@@ -4741,12 +5683,14 @@
     .parameter "a"
 
     .prologue
-    .line 663
+    const/4 v4, 0x1
+
+    .line 682
     new-instance v1, Ljava/lang/Throwable;
 
     invoke-direct {v1}, Ljava/lang/Throwable;-><init>()V
 
-    .line 664
+    .line 683
     .local v1, t:Ljava/lang/Throwable;
     new-instance v2, Ljava/lang/StringBuilder;
 
@@ -4768,8 +5712,6 @@
 
     move-result-object v3
 
-    const/4 v4, 0x1
-
     aget-object v3, v3, v4
 
     invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getClassName()Ljava/lang/String;
@@ -4784,8 +5726,74 @@
 
     move-result-object v0
 
-    .line 665
+    .line 684
     .local v0, logtag:Ljava/lang/String;
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, "->"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getMethodName()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 685
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, " Line "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getLineNumber()I
+
+    move-result v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 686
     new-instance v2, Ljava/lang/StringBuilder;
 
     invoke-static {p0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
@@ -4825,7 +5833,7 @@
     .parameter "whereArgs"
 
     .prologue
-    .line 693
+    .line 722
     new-instance v13, Ljava/lang/StringBuilder;
 
     const/16 v16, 0x78
@@ -4834,7 +5842,7 @@
 
     invoke-direct {v13, v0}, Ljava/lang/StringBuilder;-><init>(I)V
 
-    .line 694
+    .line 723
     .local v13, sqlsub:Ljava/lang/StringBuilder;
     new-instance v12, Ljava/lang/StringBuilder;
 
@@ -4844,7 +5852,7 @@
 
     invoke-direct {v12, v0}, Ljava/lang/StringBuilder;-><init>(I)V
 
-    .line 695
+    .line 724
     .local v12, sql:Ljava/lang/StringBuilder;
     const-string v16, "UPDATE "
 
@@ -4852,55 +5860,55 @@
 
     invoke-virtual {v12, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 696
+    .line 725
     move-object/from16 v0, p0
 
     invoke-virtual {v12, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 697
+    .line 726
     const-string v16, " SET "
 
     move-object/from16 v0, v16
 
     invoke-virtual {v12, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 700
+    .line 729
     invoke-virtual/range {p1 .. p1}, Landroid/content/ContentValues;->size()I
 
     move-result v11
 
-    .line 701
+    .line 730
     .local v11, setValuesSize:I
     if-nez p3, :cond_2
 
     move v3, v11
 
-    .line 702
+    .line 731
     .local v3, bindArgsSize:I
     :goto_0
     new-array v2, v3, [Ljava/lang/Object;
 
-    .line 703
+    .line 732
     .local v2, bindArgs:[Ljava/lang/Object;
     const/4 v6, 0x0
 
-    .line 706
+    .line 735
     .local v6, i:I
     new-instance v1, Ljava/util/HashSet;
 
     invoke-direct {v1}, Ljava/util/HashSet;-><init>()V
 
-    .line 707
+    .line 736
     .local v1, ar:Ljava/util/Set;,"Ljava/util/Set<Ljava/lang/String;>;"
     invoke-virtual/range {p1 .. p1}, Landroid/content/ContentValues;->valueSet()Ljava/util/Set;
 
     move-result-object v10
 
-    .line 708
+    .line 737
     .local v10, s:Ljava/util/Set;,"Ljava/util/Set<Ljava/util/Map$Entry<Ljava/lang/String;Ljava/lang/Object;>;>;"
     const/4 v15, 0x0
 
-    .line 709
+    .line 738
     .local v15, x:I
     invoke-interface {v10}, Ljava/util/Set;->iterator()Ljava/util/Iterator;
 
@@ -4913,7 +5921,7 @@
 
     if-nez v16, :cond_3
 
-    .line 716
+    .line 745
     invoke-interface {v1}, Ljava/util/Set;->iterator()Ljava/util/Iterator;
 
     move-result-object v17
@@ -4925,16 +5933,16 @@
 
     if-nez v16, :cond_5
 
-    .line 722
+    .line 751
     if-eqz p3, :cond_0
 
-    .line 723
+    .line 752
     move v6, v11
 
     :goto_3
     if-lt v6, v3, :cond_7
 
-    .line 727
+    .line 756
     :cond_0
     invoke-static/range {p2 .. p2}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
 
@@ -4942,19 +5950,19 @@
 
     if-nez v16, :cond_1
 
-    .line 728
+    .line 757
     const-string v16, " WHERE "
 
     move-object/from16 v0, v16
 
     invoke-virtual {v12, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 729
+    .line 758
     move-object/from16 v0, p2
 
     invoke-virtual {v12, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 732
+    .line 761
     :cond_1
     new-instance v16, Ljava/lang/StringBuilder;
 
@@ -4990,13 +5998,13 @@
 
     move-result-object v9
 
-    .line 734
+    .line 763
     .local v9, m:Ljava/lang/String;
     new-instance v14, Ljava/lang/Throwable;
 
     invoke-direct {v14}, Ljava/lang/Throwable;-><init>()V
 
-    .line 735
+    .line 764
     .local v14, t:Ljava/lang/Throwable;
     new-instance v16, Ljava/lang/StringBuilder;
 
@@ -5034,8 +6042,78 @@
 
     move-result-object v8
 
-    .line 736
+    .line 765
     .local v8, logtag:Ljava/lang/String;
+    new-instance v16, Ljava/lang/StringBuilder;
+
+    invoke-static {v8}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v17
+
+    invoke-direct/range {v16 .. v17}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v17, "->"
+
+    invoke-virtual/range {v16 .. v17}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v16
+
+    invoke-virtual {v14}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v17
+
+    const/16 v18, 0x1
+
+    aget-object v17, v17, v18
+
+    invoke-virtual/range {v17 .. v17}, Ljava/lang/StackTraceElement;->getMethodName()Ljava/lang/String;
+
+    move-result-object v17
+
+    invoke-virtual/range {v16 .. v17}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v16
+
+    invoke-virtual/range {v16 .. v16}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v8
+
+    .line 766
+    new-instance v16, Ljava/lang/StringBuilder;
+
+    invoke-static {v8}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v17
+
+    invoke-direct/range {v16 .. v17}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v17, " Line "
+
+    invoke-virtual/range {v16 .. v17}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v16
+
+    invoke-virtual {v14}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v17
+
+    const/16 v18, 0x1
+
+    aget-object v17, v17, v18
+
+    invoke-virtual/range {v17 .. v17}, Ljava/lang/StackTraceElement;->getLineNumber()I
+
+    move-result v17
+
+    invoke-virtual/range {v16 .. v17}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v16
+
+    invoke-virtual/range {v16 .. v16}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v8
+
+    .line 767
     invoke-static {v9}, Liglogger;->notEmpty(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v16
@@ -5048,7 +6126,7 @@
 
     return v16
 
-    .line 701
+    .line 730
     .end local v1           #ar:Ljava/util/Set;,"Ljava/util/Set<Ljava/lang/String;>;"
     .end local v2           #bindArgs:[Ljava/lang/Object;
     .end local v3           #bindArgsSize:I
@@ -5069,7 +6147,7 @@
 
     goto/16 :goto_0
 
-    .line 709
+    .line 738
     .restart local v1       #ar:Ljava/util/Set;,"Ljava/util/Set<Ljava/lang/String;>;"
     .restart local v2       #bindArgs:[Ljava/lang/Object;
     .restart local v3       #bindArgsSize:I
@@ -5083,7 +6161,7 @@
 
     check-cast v5, Ljava/util/Map$Entry;
 
-    .line 710
+    .line 739
     .local v5, entry:Ljava/util/Map$Entry;,"Ljava/util/Map$Entry<Ljava/lang/String;Ljava/lang/Object;>;"
     invoke-interface {v5}, Ljava/util/Map$Entry;->getKey()Ljava/lang/Object;
 
@@ -5095,7 +6173,7 @@
 
     invoke-interface {v1, v0}, Ljava/util/Set;->add(Ljava/lang/Object;)Z
 
-    .line 711
+    .line 740
     if-lez v15, :cond_4
 
     const-string v16, ", "
@@ -5105,7 +6183,7 @@
 
     invoke-virtual {v13, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 712
+    .line 741
     invoke-interface {v5}, Ljava/util/Map$Entry;->getValue()Ljava/lang/Object;
 
     move-result-object v16
@@ -5114,18 +6192,18 @@
 
     invoke-virtual {v13, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
-    .line 713
+    .line 742
     add-int/lit8 v15, v15, 0x1
 
     goto/16 :goto_1
 
-    .line 711
+    .line 740
     :cond_4
     const-string v16, ""
 
     goto :goto_4
 
-    .line 716
+    .line 745
     .end local v5           #entry:Ljava/util/Map$Entry;,"Ljava/util/Map$Entry<Ljava/lang/String;Ljava/lang/Object;>;"
     :cond_5
     invoke-interface/range {v17 .. v17}, Ljava/util/Iterator;->next()Ljava/lang/Object;
@@ -5134,7 +6212,7 @@
 
     check-cast v4, Ljava/lang/String;
 
-    .line 717
+    .line 746
     .local v4, colName:Ljava/lang/String;
     if-lez v6, :cond_6
 
@@ -5145,10 +6223,10 @@
 
     invoke-virtual {v12, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 718
+    .line 747
     invoke-virtual {v12, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 719
+    .line 748
     add-int/lit8 v7, v6, 0x1
 
     .end local v6           #i:I
@@ -5161,7 +6239,7 @@
 
     aput-object v16, v2, v6
 
-    .line 720
+    .line 749
     const-string v16, "=?"
 
     move-object/from16 v0, v16
@@ -5174,13 +6252,13 @@
     .restart local v6       #i:I
     goto/16 :goto_2
 
-    .line 717
+    .line 746
     :cond_6
     const-string v16, ""
 
     goto :goto_5
 
-    .line 724
+    .line 753
     .end local v4           #colName:Ljava/lang/String;
     :cond_7
     sub-int v16, v6, v11
@@ -5189,7 +6267,7 @@
 
     aput-object v16, v2, v6
 
-    .line 723
+    .line 752
     add-int/lit8 v6, v6, 0x1
 
     goto/16 :goto_3
@@ -5201,12 +6279,14 @@
     .parameter "n"
 
     .prologue
-    .line 763
+    const/4 v4, 0x1
+
+    .line 798
     new-instance v1, Ljava/lang/Throwable;
 
     invoke-direct {v1}, Ljava/lang/Throwable;-><init>()V
 
-    .line 764
+    .line 799
     .local v1, t:Ljava/lang/Throwable;
     new-instance v2, Ljava/lang/StringBuilder;
 
@@ -5228,8 +6308,6 @@
 
     move-result-object v3
 
-    const/4 v4, 0x1
-
     aget-object v3, v3, v4
 
     invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getClassName()Ljava/lang/String;
@@ -5244,11 +6322,77 @@
 
     move-result-object v0
 
-    .line 765
+    .line 800
     .local v0, logtag:Ljava/lang/String;
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, "->"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getMethodName()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 801
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, " Line "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getLineNumber()I
+
+    move-result v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 802
     if-nez p1, :cond_0
 
-    .line 766
+    .line 803
     new-instance v2, Ljava/lang/StringBuilder;
 
     invoke-static {p0}, Liglogger;->notEmpty(Ljava/lang/String;)Ljava/lang/String;
@@ -5275,7 +6419,7 @@
 
     move-result v2
 
-    .line 768
+    .line 805
     :goto_0
     return v2
 
@@ -5327,12 +6471,14 @@
     .parameter "n"
 
     .prologue
-    .line 758
+    const/4 v4, 0x1
+
+    .line 791
     new-instance v1, Ljava/lang/Throwable;
 
     invoke-direct {v1}, Ljava/lang/Throwable;-><init>()V
 
-    .line 759
+    .line 792
     .local v1, t:Ljava/lang/Throwable;
     new-instance v2, Ljava/lang/StringBuilder;
 
@@ -5354,8 +6500,6 @@
 
     move-result-object v3
 
-    const/4 v4, 0x1
-
     aget-object v3, v3, v4
 
     invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getClassName()Ljava/lang/String;
@@ -5370,8 +6514,74 @@
 
     move-result-object v0
 
-    .line 760
+    .line 793
     .local v0, logtag:Ljava/lang/String;
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, "->"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getMethodName()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 794
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-direct {v2, v3}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    const-string v3, " Line "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v1}, Ljava/lang/Throwable;->getStackTrace()[Ljava/lang/StackTraceElement;
+
+    move-result-object v3
+
+    aget-object v3, v3, v4
+
+    invoke-virtual {v3}, Ljava/lang/StackTraceElement;->getLineNumber()I
+
+    move-result v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 795
     new-instance v2, Ljava/lang/StringBuilder;
 
     invoke-static {p0}, Liglogger;->notEmpty(Ljava/lang/String;)Ljava/lang/String;

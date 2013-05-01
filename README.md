@@ -66,6 +66,10 @@ If logging looks strange or missing from Logcat in DDMS/Monitor, try "adb logcat
 Version History
 ===============
 
+v2.55 
+ 
+ + Added printing of the line number to all trace functions. The new APKSmash script should insert line numbers, making this output more useful.
+ 
 v2.50 
  
  + Added a lot more "trace" classes (for use mainly with APKSmash).

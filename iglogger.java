@@ -65,7 +65,7 @@ public class iglogger {
 	// In logcat, set your filter for "tag:!!!" to view the messages from this class
 	private static String LOG_TAG = "!!! IGLogger";
 	private static String TRACE_TAG = "!!! IGTraceLogger";
-	private static String VERSION = "IGLogger 2.50 - 04/20/2013";
+	private static String VERSION = "IGLogger 2.55 - 04/24/2013";
 	
 	 /* Default Case
 	  *  - Use this call to just print you where here in a method
@@ -487,9 +487,9 @@ public class iglogger {
 		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
 		 
 		 if(m){
-			 p = "returning: TRUE";
+			 p = " returning: TRUE";
 		 } else {
-			 p = "returning: FALSE";
+			 p = " returning: FALSE";
 		 }
 	     return android.util.Log.i(logtag, notEmpty(p));
 	 }		   	 
@@ -503,33 +503,45 @@ public class iglogger {
 	  */ 	 	 
 	 static public int trace_dbcolumn(String m) {
 		 Throwable t = new Throwable();
-		 String logtag = TRACE_TAG + " DB Get Column : " + t.getStackTrace()[1].getClassName();		  
+		 String logtag = TRACE_TAG + " DB Get Column : " + t.getStackTrace()[1].getClassName();	
+		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
+		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
 	     return android.util.Log.wtf(logtag, notEmpty(m));
 	 }	 
 	 static public int trace_dbgetstring(String m) {
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " DB Get String Value : " + t.getStackTrace()[1].getClassName();		  
-	     return android.util.Log.wtf(logtag, notEmpty(m));
+		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
+		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
+		 return android.util.Log.wtf(logtag, notEmpty(m));
 	 }	
 	 static public int trace_sharedpref(String m) {
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " Shared Pref Access : " + t.getStackTrace()[1].getClassName();		  
-	     return android.util.Log.wtf(logtag, notEmpty(m));
+		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
+		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
+		 return android.util.Log.wtf(logtag, notEmpty(m));
 	 }
 	 static public int trace_json(String m) {
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " creating JSON: " + t.getStackTrace()[1].getClassName();		  
-	     return android.util.Log.wtf(logtag, notEmpty(m));
+		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
+		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
+		 return android.util.Log.wtf(logtag, notEmpty(m));
 	 }	 
 	 static public int trace_httpstring(String m) {
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " HTTP String: " + t.getStackTrace()[1].getClassName();		  
-	     return android.util.Log.wtf(logtag, notEmpty(m));
+		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
+		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
+		 return android.util.Log.wtf(logtag, notEmpty(m));
 	 }
 	 static public int trace_intent(String m) {
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " creating INTENT: " + t.getStackTrace()[1].getClassName();		  
-	     return android.util.Log.wtf(logtag, notEmpty(m));
+		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
+		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
+		 return android.util.Log.wtf(logtag, notEmpty(m));
 	 }	
 	 static public int trace_intent(Intent i) {
 		 return trace_intent(i, "UNKNOWN", "UNKNOWN");
@@ -554,7 +566,10 @@ public class iglogger {
 	 }		 
 	 static public int trace_intent(Intent i, String commandtype, String sendorreceive) {
 		 Throwable t = new Throwable();
-		 String logtag = TRACE_TAG + " " + sendorreceive + " INTENT from: " + t.getStackTrace()[2].getClassName();	
+		 String logtag = TRACE_TAG + " " + sendorreceive + " INTENT from: " + t.getStackTrace()[2].getClassName();
+		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
+		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
+		 
 		 String m = "am "+ commandtype;
 		 try{
 			 // This should put data in a form for 'adb shell am' <INTENT> 
@@ -645,7 +660,9 @@ public class iglogger {
          
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " INTENT extras: " + t.getStackTrace()[1].getClassName();		  
-	     return android.util.Log.wtf(logtag, notEmpty(m));
+		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
+		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
+		 return android.util.Log.wtf(logtag, notEmpty(m));
 	 }	
 
 	 /* Trace Stuff for SQL
@@ -657,36 +674,48 @@ public class iglogger {
 	 static public int trace_sqlstring(String m) {
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " SQL String: " + t.getStackTrace()[1].getClassName();		  
-	     return android.util.Log.wtf(logtag, notEmpty(m));
+		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
+		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
+		 return android.util.Log.wtf(logtag, notEmpty(m));
 	 }	
 	 static public int trace_sqlstring(String m, String[] a) {
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " SQL String w/ args: " + t.getStackTrace()[1].getClassName();		  
-	     return android.util.Log.wtf(logtag, notEmpty(m + a.toString() ));
+		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
+		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
+		 return android.util.Log.wtf(logtag, notEmpty(m + a.toString() ));
 	 }		 
 	 static public int trace_sqlquery(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy, String limit) {
 		 String sql = SQLiteQueryBuilder.buildQueryString(false, table, columns, selection, groupBy, having, orderBy, limit);
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " SQL Query: " + t.getStackTrace()[1].getClassName();		  
-	     return android.util.Log.wtf(logtag, notEmpty(sql));
+		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
+		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
+		 return android.util.Log.wtf(logtag, notEmpty(sql));
 	 }	
 	 static public int trace_sqlquery(boolean distinct, String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy, String limit) {
 		 String sql = SQLiteQueryBuilder.buildQueryString(distinct, table, columns, selection, groupBy, having, orderBy, limit);
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " SQL Query: " + t.getStackTrace()[1].getClassName();		  
-	     return android.util.Log.wtf(logtag, notEmpty(sql));
+		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
+		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
+		 return android.util.Log.wtf(logtag, notEmpty(sql));
 	 }	
 	 static public int trace_sqlquery(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
 		 String sql = SQLiteQueryBuilder.buildQueryString(false, table, columns, selection, groupBy, having, orderBy, null);
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " SQL Query: " + t.getStackTrace()[1].getClassName();		  
-	     return android.util.Log.wtf(logtag, notEmpty(sql));
+		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
+		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
+		 return android.util.Log.wtf(logtag, notEmpty(sql));
 	 }	
 	 static public int trace_sqlquery(boolean distinct, String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
 		 String sql = SQLiteQueryBuilder.buildQueryString(distinct, table, columns, selection, groupBy, having, orderBy, null);
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " SQL Query: " + t.getStackTrace()[1].getClassName();		  
-	     return android.util.Log.wtf(logtag, notEmpty(sql));
+		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
+		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
+		 return android.util.Log.wtf(logtag, notEmpty(sql));
 	 }	 
 	 static public int trace_sqlupdate(String table, ContentValues values, String whereClause, String[] whereArgs) {
 		 
@@ -733,13 +762,17 @@ public class iglogger {
          
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " SQL String: " + t.getStackTrace()[1].getClassName();		  
-	     return android.util.Log.wtf(logtag, notEmpty(m));
+		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
+		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
+		 return android.util.Log.wtf(logtag, notEmpty(m));
 	 }		 
 
 	 static public int trace_basicnamevaluepair(String m, String n) {
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " name value: " + t.getStackTrace()[1].getClassName();		  
-	     return android.util.Log.wtf(logtag, notEmpty(m) + ": " + notEmpty(n));
+		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
+		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
+		 return android.util.Log.wtf(logtag, notEmpty(m) + ": " + notEmpty(n));
 	 }	
 	 
 	 /* Trace String Compare
@@ -757,11 +790,15 @@ public class iglogger {
 	 static public int trace_stringcompare(String m, String n) {
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " string compare: " + t.getStackTrace()[1].getClassName();		  
-	     return android.util.Log.wtf(logtag, notEmpty(m) + " == " + notEmpty(n));
+		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
+		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
+		 return android.util.Log.wtf(logtag, notEmpty(m) + " == " + notEmpty(n));
 	 }	
 	 static public int trace_stringcompare(String m, Object n) {
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " string compare: " + t.getStackTrace()[1].getClassName();	
+		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
+		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
 		 if(n == null ){
 			 return android.util.Log.wtf(logtag, notEmpty(m) + " == <empty value>");
 		 }
