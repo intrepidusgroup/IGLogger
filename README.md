@@ -63,6 +63,22 @@ http://source.android.com/tech/dalvik/dex-format.html
 
 If logging looks strange or missing from Logcat in DDMS/Monitor, try "adb logcat". 
 
+
+change log level
+===============
+search & replace
+
+.java:
+`android.util.Log.d`
+
+`android.util.Log.wtf`
+
+.smali:
+`android/util/Log;->d`
+
+`android/util/Log;->wtf`
+
+
 Version History
 ===============
 

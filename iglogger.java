@@ -19,6 +19,16 @@ import android.text.TextUtils;
  * Wrapper for debugging methods. 
  * I'm suggesting making this all "wtf" level, but feel free to change this :-)
  * 
+ * =========== change log level =========
+ * search & replace
+ * java:
+ * android.util.Log.d
+ * android.util.Log.wtf
+ * 
+ * smali:
+ * android/util/Log;->d
+ * android/util/Log;->wtf
+ * 
  * =========== Usage ====================
  * 
  * Compile this to an APK, use APKTool to decompile, place the "iglogger.smali" in the
@@ -85,7 +95,7 @@ public class iglogger {
 		 // Line number so far as "-1" but this might work on some apps. 
 		 // We'll leave it for now.
 		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();
-	     return android.util.Log.wtf(logtag, logtag);
+	     return android.util.Log.d(logtag, logtag);
 	 }
 
 		
@@ -102,7 +112,7 @@ public class iglogger {
 		 Throwable t = new Throwable();
 		 for(int x = 1; x < t.getStackTrace().length; x++){
 			String logtag = LOG_TAG + ": STACKTRACE: " + x;
-		 	android.util.Log.wtf(logtag, t.getStackTrace()[x].getClassName());
+			android.util.Log.d(logtag, t.getStackTrace()[x].getClassName());
 		 }
 	     return 1;
 	 }
@@ -117,12 +127,12 @@ public class iglogger {
 	 static public int d(String m) {
 		 Throwable t = new Throwable();
 		 String logtag = LOG_TAG + ": " + t.getStackTrace()[1].getClassName();		  
-	     return android.util.Log.wtf(logtag, notEmpty(m));
+	     return android.util.Log.d(logtag, notEmpty(m));
 	 }
 	 
 	 static public int d(String t, String m) {
 	     //writeLog("D", t, m);
-	     return android.util.Log.wtf(t, notEmpty(m));
+	     return android.util.Log.d(t, notEmpty(m));
 	 }
 
 
@@ -137,11 +147,11 @@ public class iglogger {
 	 static public int d(Boolean m) {
 		 Throwable t = new Throwable();
 		 String logtag = LOG_TAG + ": " + t.getStackTrace()[1].getClassName();			 
-	     return android.util.Log.wtf(logtag, notEmpty(m.toString()));
+	     return android.util.Log.d(logtag, notEmpty(m.toString()));
 	 }	
 	 
 	 static public int d(String t, Boolean m) {
-	     return android.util.Log.wtf(t, notEmpty(m.toString()));
+	     return android.util.Log.d(t, notEmpty(m.toString()));
 	 }
 
 	 /* Char Case
@@ -154,11 +164,11 @@ public class iglogger {
 	 static public int d(char m) {
 		 Throwable t = new Throwable();
 		 String logtag = LOG_TAG + ": " + t.getStackTrace()[1].getClassName();	
-	     return android.util.Log.wtf(logtag, notEmpty(Character.toString(m)));
+	     return android.util.Log.d(logtag, notEmpty(Character.toString(m)));
 	 }	
 	 
 	 static public int d(String t, char m) {
-	     return android.util.Log.wtf(t, notEmpty(Character.toString(m)));
+	     return android.util.Log.d(t, notEmpty(Character.toString(m)));
 	 }	 
 	 
 	 /* Int Case
@@ -172,31 +182,31 @@ public class iglogger {
 		 Throwable t = new Throwable();
 		 String logtag = LOG_TAG + ": " + t.getStackTrace()[1].getClassName();			 
 		 String s = notEmpty(Integer.toString(m));
-	     return android.util.Log.wtf(logtag, s);
+	     return android.util.Log.d(logtag, s);
 	 }
 
 	 static public int d(String t, int m) {
 		 String s = notEmpty(Integer.toString(m));
-	     return android.util.Log.wtf(t, s);
+	     return android.util.Log.d(t, s);
 	 }
 	 
 	 /* Long Case
 	  *   Smali Type Value: 0x06
 	  *   
 	  * *** SMALI CODE TO ADD ***
-	  * invoke-static {v0}, Liglogger;->d(J)I
+	  * invoke-static {v0, v1}, Liglogger;->d(J)I
 	  * 
 	  */	 
 	 static public int d(long m) {
 		 Throwable t = new Throwable();
 		 String logtag = LOG_TAG + ": " + t.getStackTrace()[1].getClassName();			 
 		 String s = notEmpty(Long.toString(m));
-	     return android.util.Log.wtf(logtag, s);
+	     return android.util.Log.d(logtag, s);
 	 }
 
 	 static public int d(String t, long m) {
 		 String s = notEmpty(Long.toString(m));
-	     return android.util.Log.wtf(t, s);
+	     return android.util.Log.d(t, s);
 	 }	 
 
 	 /* Float Case
@@ -209,11 +219,11 @@ public class iglogger {
 	 static public int d(float m) {
 		 Throwable t = new Throwable();
 		 String logtag = LOG_TAG + ": " + t.getStackTrace()[1].getClassName();	
-	     return android.util.Log.wtf(logtag, Float.toString(m));
+	     return android.util.Log.d(logtag, Float.toString(m));
 	 }	
 	 
 	 static public int d(String t, float m) {
-	     return android.util.Log.wtf(t, Float.toString(m));
+	     return android.util.Log.d(t, Float.toString(m));
 	 }	
 	 
 	 
@@ -221,17 +231,17 @@ public class iglogger {
 	  *   Smali Type Value: 0x11
 	  * 
 	  * *** SMALI CODE TO ADD ***
-	  * invoke-static {v0}, Liglogger;->d(D)I
+	  * invoke-static {v0, v1}, Liglogger;->d(D)I
 	  * 
 	  */ 		 
 	 static public int d(double m) {
 		 Throwable t = new Throwable();
 		 String logtag = LOG_TAG + ": " + t.getStackTrace()[1].getClassName();	
-	     return android.util.Log.wtf(logtag, Double.toString(m));
+	     return android.util.Log.d(logtag, Double.toString(m));
 	 }	
 	 
 	 static public int d(String t, double m) {
-	     return android.util.Log.wtf(t, Double.toString(m));
+	     return android.util.Log.d(t, Double.toString(m));
 	 }
 
 	 
@@ -245,11 +255,11 @@ public class iglogger {
 	 static public int d(short m) {
 		 Throwable t = new Throwable();
 		 String logtag = LOG_TAG + ": " + t.getStackTrace()[1].getClassName();	
-	     return android.util.Log.wtf(logtag, Short.toString(m));
+	     return android.util.Log.d(logtag, Short.toString(m));
 	 }	
 	 
 	 static public int d(String t, short m) {
-	     return android.util.Log.wtf(t, Short.toString(m));
+	     return android.util.Log.d(t, Short.toString(m));
 	 }
 
 	 /* Byte Case
@@ -262,11 +272,11 @@ public class iglogger {
 	 static public int d(byte m) {
 		 Throwable t = new Throwable();
 		 String logtag = LOG_TAG + ": " + t.getStackTrace()[1].getClassName();	
-	     return android.util.Log.wtf(logtag, Byte.toString(m));
+	     return android.util.Log.d(logtag, Byte.toString(m));
 	 }	
 	 
 	 static public int d(String t, byte m) {
-	     return android.util.Log.wtf(t, Byte.toString(m));
+	     return android.util.Log.d(t, Byte.toString(m));
 	 }
 	 
 	 /* String Array Case
@@ -282,7 +292,7 @@ public class iglogger {
 		 
 		 for(int x=0; x < m.length; x++){
 			 String currentlogtag = logtag + " - array " + x;
-			 android.util.Log.wtf(currentlogtag, notEmpty(m[x]));
+			 android.util.Log.d(currentlogtag, notEmpty(m[x]));
 		 }
 	     return 1;
 	 }	
@@ -290,7 +300,7 @@ public class iglogger {
 	 static public int d(String t, String []m) {
 		 for(int x=0; x < m.length; x++){
 			 String logtag = t + " - array " + x;
-			 android.util.Log.wtf(logtag, notEmpty(m[x]));
+			 android.util.Log.d(logtag, notEmpty(m[x]));
 		 }
 	     return 1;
 	 }	 
@@ -314,7 +324,7 @@ public class iglogger {
 		 int x = 0;
 		 for (Iterator<String> iterator = m.iterator(); iterator.hasNext();) {
 			 String currentlogtag = logtag + " - collection " + x++;
-			 android.util.Log.wtf(currentlogtag, notEmpty(iterator.next()));
+			 android.util.Log.d(currentlogtag, notEmpty(iterator.next()));
 			 }		 
 	     return 1;
 	 }	
@@ -323,7 +333,7 @@ public class iglogger {
 		 int x = 0;
 		 for (Iterator<String> iterator = m.iterator(); iterator.hasNext();) {
 			 String logtag = t + " - collection " + x++;
-			 android.util.Log.wtf(logtag, notEmpty(iterator.next()));
+			 android.util.Log.d(logtag, notEmpty(iterator.next()));
 			 }		 
 	     return 1;
 	 }	
@@ -340,18 +350,18 @@ public class iglogger {
 		 String logtag = LOG_TAG + ": " + t.getStackTrace()[1].getClassName();	
 		 
 		 try{
-			 android.util.Log.wtf(logtag, m.toString());
+			 android.util.Log.d(logtag, m.toString());
 		 } catch (Exception e) {
-			 android.util.Log.wtf(logtag, "Error, could not convert to string");
+			 android.util.Log.d(logtag, "Error, could not convert to string");
 		 }
 	     return 1;
 	 }	 
 
 	 static public int d(String t, Object m) {
 		 try{
-			 android.util.Log.wtf(t, m.toString());
+			 android.util.Log.d(t, m.toString());
 		 } catch (Exception e) {
-			 android.util.Log.wtf(t, "Error, could not convert to string");
+			 android.util.Log.d(t, "Error, could not convert to string");
 		 }
 	     return 1;
 	 }
@@ -367,11 +377,11 @@ public class iglogger {
 	 static public int d(byte[] m) {
 		 Throwable t = new Throwable();
 		 String logtag = LOG_TAG + ": " + t.getStackTrace()[1].getClassName() + " - byte[] in Hex: ";			 
-	     return android.util.Log.wtf(logtag, notEmpty(ListToHex(m)));
+	     return android.util.Log.d(logtag, notEmpty(ListToHex(m)));
 	 }
 
 	 static public int d(String t, byte[] m) {
-	     return android.util.Log.wtf(t, notEmpty(ListToHex(m)));
+	     return android.util.Log.d(t, notEmpty(ListToHex(m)));
 	 }		 
 	 
 	 
@@ -386,18 +396,18 @@ public class iglogger {
 		 String logtag = LOG_TAG + ": " + t.getStackTrace()[1].getClassName();	
 		 
 		 try{
-			 android.util.Log.wtf(logtag, m.toString());
+			 android.util.Log.d(logtag, m.toString());
 		 } catch (Exception e) {
-			 android.util.Log.wtf(logtag, "Error, could not convert URL to string");
+			 android.util.Log.d(logtag, "Error, could not convert URL to string");
 		 }
 	     return 1;
 	 }
 
 	 static public int d(String t, URL m) {
 		 try{
-			 android.util.Log.wtf(t, m.toString());
+			 android.util.Log.d(t, m.toString());
 		 } catch (Exception e) {
-			 android.util.Log.wtf(t, "Error, could not convert URL to string");
+			 android.util.Log.d(t, "Error, could not convert URL to string");
 		 }
 	     return 1;
 	 }	 
@@ -427,7 +437,7 @@ public class iglogger {
 	 static public int d(String logtag, URLConnection m) {
 		 
 		 try{
-			 android.util.Log.wtf(logtag, m.toString());
+			 android.util.Log.d(logtag, m.toString());
 			 
 			 //Print Headers
 			 Map<String, List<String>> headers = m.getRequestProperties();
@@ -436,12 +446,12 @@ public class iglogger {
 				 List<String> values = headers.get(key);
 				 Iterator<String> itr = values.iterator();
 			     while(itr.hasNext()) {
-			    	 android.util.Log.wtf(logtag + " Header: " + key, notEmpty(itr.next()));
+			    	 android.util.Log.d(logtag + " Header: " + key, notEmpty(itr.next()));
 			       }
 			 }
 			 
 		 } catch (Exception e) {
-			 android.util.Log.wtf(logtag, "Error, could not convert URLConnection to string");
+			 android.util.Log.d(logtag, "Error, could not convert URLConnection to string");
 		 }
 	     return 1;
 	 }
@@ -506,42 +516,42 @@ public class iglogger {
 		 String logtag = TRACE_TAG + " DB Get Column : " + t.getStackTrace()[1].getClassName();	
 		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
 		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
-	     return android.util.Log.wtf(logtag, notEmpty(m));
+	     return android.util.Log.d(logtag, notEmpty(m));
 	 }	 
 	 static public int trace_dbgetstring(String m) {
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " DB Get String Value : " + t.getStackTrace()[1].getClassName();		  
 		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
 		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
-		 return android.util.Log.wtf(logtag, notEmpty(m));
+		 return android.util.Log.d(logtag, notEmpty(m));
 	 }	
 	 static public int trace_sharedpref(String m) {
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " Shared Pref Access : " + t.getStackTrace()[1].getClassName();		  
 		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
 		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
-		 return android.util.Log.wtf(logtag, notEmpty(m));
+		 return android.util.Log.d(logtag, notEmpty(m));
 	 }
 	 static public int trace_json(String m) {
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " creating JSON: " + t.getStackTrace()[1].getClassName();		  
 		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
 		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
-		 return android.util.Log.wtf(logtag, notEmpty(m));
+		 return android.util.Log.d(logtag, notEmpty(m));
 	 }	 
 	 static public int trace_httpstring(String m) {
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " HTTP String: " + t.getStackTrace()[1].getClassName();		  
 		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
 		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
-		 return android.util.Log.wtf(logtag, notEmpty(m));
+		 return android.util.Log.d(logtag, notEmpty(m));
 	 }
 	 static public int trace_intent(String m) {
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " creating INTENT: " + t.getStackTrace()[1].getClassName();		  
 		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
 		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
-		 return android.util.Log.wtf(logtag, notEmpty(m));
+		 return android.util.Log.d(logtag, notEmpty(m));
 	 }	
 	 static public int trace_intent(Intent i) {
 		 return trace_intent(i, "UNKNOWN", "UNKNOWN");
@@ -622,9 +632,9 @@ public class iglogger {
 		 }
 		 
 		 // for debugging, we might have missed something above... consider turn this off later
-		 android.util.Log.wtf(TRACE_TAG + " INTENT toString ", notEmpty(i.toString()));
+		 android.util.Log.d(TRACE_TAG + " INTENT toString ", notEmpty(i.toString()));
 		 
-	     return android.util.Log.wtf(logtag, notEmpty(m));
+	     return android.util.Log.d(logtag, notEmpty(m));
 	 }		 
 	 static public int trace_getextras(Bundle b) {
 		 String m = "";
@@ -662,7 +672,7 @@ public class iglogger {
 		 String logtag = TRACE_TAG + " INTENT extras: " + t.getStackTrace()[1].getClassName();		  
 		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
 		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
-		 return android.util.Log.wtf(logtag, notEmpty(m));
+		 return android.util.Log.d(logtag, notEmpty(m));
 	 }	
 
 	 /* Trace Stuff for SQL
@@ -676,14 +686,14 @@ public class iglogger {
 		 String logtag = TRACE_TAG + " SQL String: " + t.getStackTrace()[1].getClassName();		  
 		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
 		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
-		 return android.util.Log.wtf(logtag, notEmpty(m));
+		 return android.util.Log.d(logtag, notEmpty(m));
 	 }	
 	 static public int trace_sqlstring(String m, String[] a) {
 		 Throwable t = new Throwable();
 		 String logtag = TRACE_TAG + " SQL String w/ args: " + t.getStackTrace()[1].getClassName();		  
 		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
 		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
-		 return android.util.Log.wtf(logtag, notEmpty(m + a.toString() ));
+		 return android.util.Log.d(logtag, notEmpty(m + a.toString() ));
 	 }		 
 	 static public int trace_sqlquery(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy, String limit) {
 		 String sql = SQLiteQueryBuilder.buildQueryString(false, table, columns, selection, groupBy, having, orderBy, limit);
@@ -691,7 +701,7 @@ public class iglogger {
 		 String logtag = TRACE_TAG + " SQL Query: " + t.getStackTrace()[1].getClassName();		  
 		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
 		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
-		 return android.util.Log.wtf(logtag, notEmpty(sql));
+		 return android.util.Log.d(logtag, notEmpty(sql));
 	 }	
 	 static public int trace_sqlquery(boolean distinct, String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy, String limit) {
 		 String sql = SQLiteQueryBuilder.buildQueryString(distinct, table, columns, selection, groupBy, having, orderBy, limit);
@@ -699,7 +709,7 @@ public class iglogger {
 		 String logtag = TRACE_TAG + " SQL Query: " + t.getStackTrace()[1].getClassName();		  
 		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
 		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
-		 return android.util.Log.wtf(logtag, notEmpty(sql));
+		 return android.util.Log.d(logtag, notEmpty(sql));
 	 }	
 	 static public int trace_sqlquery(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
 		 String sql = SQLiteQueryBuilder.buildQueryString(false, table, columns, selection, groupBy, having, orderBy, null);
@@ -707,7 +717,7 @@ public class iglogger {
 		 String logtag = TRACE_TAG + " SQL Query: " + t.getStackTrace()[1].getClassName();		  
 		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
 		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
-		 return android.util.Log.wtf(logtag, notEmpty(sql));
+		 return android.util.Log.d(logtag, notEmpty(sql));
 	 }	
 	 static public int trace_sqlquery(boolean distinct, String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
 		 String sql = SQLiteQueryBuilder.buildQueryString(distinct, table, columns, selection, groupBy, having, orderBy, null);
@@ -715,7 +725,7 @@ public class iglogger {
 		 String logtag = TRACE_TAG + " SQL Query: " + t.getStackTrace()[1].getClassName();		  
 		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
 		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
-		 return android.util.Log.wtf(logtag, notEmpty(sql));
+		 return android.util.Log.d(logtag, notEmpty(sql));
 	 }	 
 	 static public int trace_sqlupdate(String table, ContentValues values, String whereClause, String[] whereArgs) {
 		 
@@ -764,7 +774,7 @@ public class iglogger {
 		 String logtag = TRACE_TAG + " SQL String: " + t.getStackTrace()[1].getClassName();		  
 		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
 		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
-		 return android.util.Log.wtf(logtag, notEmpty(m));
+		 return android.util.Log.d(logtag, notEmpty(m));
 	 }		 
 
 	 static public int trace_basicnamevaluepair(String m, String n) {
@@ -772,7 +782,7 @@ public class iglogger {
 		 String logtag = TRACE_TAG + " name value: " + t.getStackTrace()[1].getClassName();		  
 		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
 		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
-		 return android.util.Log.wtf(logtag, notEmpty(m) + ": " + notEmpty(n));
+		 return android.util.Log.d(logtag, notEmpty(m) + ": " + notEmpty(n));
 	 }	
 	 
 	 /* Trace String Compare
@@ -792,7 +802,7 @@ public class iglogger {
 		 String logtag = TRACE_TAG + " string compare: " + t.getStackTrace()[1].getClassName();		  
 		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
 		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
-		 return android.util.Log.wtf(logtag, notEmpty(m) + " == " + notEmpty(n));
+		 return android.util.Log.d(logtag, notEmpty(m) + " == " + notEmpty(n));
 	 }	
 	 static public int trace_stringcompare(String m, Object n) {
 		 Throwable t = new Throwable();
@@ -800,9 +810,9 @@ public class iglogger {
 		 logtag = logtag + "->" + t.getStackTrace()[1].getMethodName();
 		 logtag = logtag + " Line " + t.getStackTrace()[1].getLineNumber();	
 		 if(n == null ){
-			 return android.util.Log.wtf(logtag, notEmpty(m) + " == <empty value>");
+			 return android.util.Log.d(logtag, notEmpty(m) + " == <empty value>");
 		 }
-	     return android.util.Log.wtf(logtag, notEmpty(m) + " == " + notEmpty(n.toString()));
+	     return android.util.Log.d(logtag, notEmpty(m) + " == " + notEmpty(n.toString()));
 	 }		 
 	 
 	 
